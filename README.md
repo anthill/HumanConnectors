@@ -7,7 +7,7 @@ The hardware backend powering our communications.
 Wireless options
 ----------------
 
-In the following there is a loose list of links about wireless transmission methods (RF, IR, Bluetooth, Wifi, ...) to be examined more closely. Most of the devices seem to work well on Arduino, but what about Raspberry Pi? Some of the shields are to be connected to a full Arduino, some can work wireless adapters might just work with the core microcontroller.
+In the following there is a loose list of links about wireless transmission methods (RF, IR, Bluetooth, Wifi, ...) to be examined more closely. Most of the devices seem to work well on Arduino, but what about Raspberry Pi? Some of the shields are to be connected to a full Arduino, some wireless adapters might just work with the core microcontroller.
 
 Are there any law restrictions for using this [RF transmitter](http://ninjablocks.com/blogs/how-to/7501042-adding-rf-433mhz-to-your-arduino) in europe?
 

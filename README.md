@@ -13,11 +13,11 @@ Yes, there is deep belief in collective intelligence here.
 
 Lets take an example. A bunch of hackers calling themselves ANTS, designed a sensor that monitor the filling of bins in recycle centers. The reasons for that can be found [here](http://anthill.github.io/6element/presentation/).
 
-#### 6element example: connecting remote recycling centers.
+#### Example: 6element (connecting remote recycling centers)
 
 Here is the basic schema of how it works:
 
-![Alt text](img/general_schema.svg "General schema of 6element")
+![Alt text](https://rawgit.com/anthill/HumanConnectors/master/img/general_schema.svg "General schema of 6element")
 
 ## Links
 

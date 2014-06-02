@@ -11,9 +11,7 @@ In the following there is a loose list of links about wireless transmission meth
 
 Are there any law restrictions for using this [RF transmitter](http://ninjablocks.com/blogs/how-to/7501042-adding-rf-433mhz-to-your-arduino) in europe?
 
-[IR LED](http://www.adafruit.com/products/387)
- + 
-[IR Sensor](http://www.adafruit.com/products/157)
+[IR LED](http://www.adafruit.com/products/387) + [IR Sensor](http://www.adafruit.com/products/157)
 
 [Bluetooth transceiver](http://www.instructables.com/id/Cheap-2-Way-Bluetooth-Connection-Between-Arduino-a/step3/Wiring-the-Arduino-Bluetooth-transceiver/)
 

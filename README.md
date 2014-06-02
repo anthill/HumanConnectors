@@ -24,6 +24,7 @@ Here `board B` is a small actuator (maybe a arduino nano) that has a `sensor` wh
 `board A` is unique per recycling center and has processing capabilities (maybe a Raspberry Pie or Beagle Bone Black). It demands/receive info from `board B`, processes them and send them by chunk to smart phones in the vicinity.
 
 There are many possibilities for each component and the optimal solution is the result of a multidimenstional optimisation problem. For each component, we need to figure out:
+
     - energy consumption
     - range
     - price

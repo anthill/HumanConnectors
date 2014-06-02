@@ -19,11 +19,23 @@ Here is the basic schema of how it works:
 
 ![Alt text](https://rawgit.com/anthill/HumanConnectors/master/img/general_schema.svg "General schema of 6element")
 
+Here `board B` is a small actuator (maybe a arduino nano) that has a `sensor` which measures the height of waste inside the bin and a `wireless B` solution to exchange information. It is autonomous and works on a `battery`. There are as many such device as bin in the recycling center.
+
+`board A` is unique per recycling center and has processing capabilities (maybe a Raspberry Pie or Beagle Bone Black). It demands/receive info from `board B`, processes them and send them by chunk to smart phones in the vicinity.
+
+There are many possibilities for each component and the optimal solution is the result of a multidimenstional optimisation problem. For each component, we need to figure out:
+    - energy consumption
+    - range
+    - price
+    - integration
+    - size
+    - ...
+
+and then write a programs that tests all different combinations.
+
 ## Links
 
-
-Wireless options
-----------------
+### Wireless options
 
 In the following there is a loose list of links about wireless transmission methods (RF, IR, Bluetooth, Wifi, ...) to be examined more closely. Most of the devices seem to work well on Arduino, but what about Raspberry Pi? Some of the shields are to be connected to a full Arduino, some wireless adapters might just work with the core microcontroller.
 
@@ -43,11 +55,7 @@ Are there any law restrictions for using this [RF transmitter](http://ninjablock
 
 [Arduino BT](http://arduino.cc/en/Main/ArduinoBoardBT?from=Main.ArduinoBoardBluetooth)
 
-
-
-
-Arduino power consumption links
--------------------------------
+### Arduino power consumption links
 
 [Run Arduino for years](http://www.openhomeautomation.net/arduino-battery/)
 

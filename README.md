@@ -1,17 +1,17 @@
 HumanConnectors
 ===============
 
-The idea of human connector is to be able to crowd-connect remote devices by the use of a community. Each sensor or group of sensor is able to connect to a nearby smart-phone user and dump a little chunk of the data he wants to transmit. Then it is the smart-phone, via the 3G that pushes the data to the internet/server. The smart-phone must be equiped with an application where the user can enable the services he believes in.
+The idea of human connector is to be able to crowd-connect remote devices by the use of a community. Each sensor or group of sensors is able to connect to a nearby smart-phone user and dump a little chunk of the data he wants to transmit. Then it is the smart-phone, via the 3G that pushes the data to the internet/server. The smart-phone must be equiped with an application where the user can enable the services he believes in.
 
 ### Why ?
 
-Because this is the best way to put back human being in the middle of what is now called the connected world. Instead of just being particles that are monitored, citizens become enablers. If the service serves the common good or at least the good of a given community, then it can offers a free asynchronous connection (which is enough for most cases). If a service becomes crappy, it loses its community and thus it connection. 
+Because this is the best way to put back human beings in the middle of what is now called the connected world. Instead of just being particles that are monitored, citizens become enablers. If the service serves the common good or at least the good of a given community, then it can offer a free asynchronous connection (which is enough for most cases). If a service becomes crappy, it loses its community and thus its connection. 
 
 Yes, there is deep belief in collective intelligence here.
 
 ### How ?
 
-Lets take an example. A bunch of hackers calling themselves ANTS, designed a sensor that monitor the filling of bins in recycle centers. The reasons for that can be found [here](http://anthill.github.io/6element/presentation/).
+Lets take an example. A bunch of hackers calling themselves ANTS, designed a sensor that monitors the filling of bins in recycle centers. The reasons for that can be found [here](http://anthill.github.io/6element/presentation/).
 
 #### Example: 6element (connecting remote recycling centers)
 
@@ -19,11 +19,11 @@ Here is the basic schema of how it works:
 
 ![Alt text](https://rawgit.com/anthill/HumanConnectors/master/img/general_schema.svg "General schema of 6element")
 
-Here `board B` is a small actuator (maybe a arduino nano) that has a `sensor` which measures the height of waste inside the bin and a `wireless B` solution to exchange information. It is autonomous and works on a `battery`. There are as many such device as bin in the recycling center.
+Here `board B` is a small actuator (maybe a arduino nano) that has a `sensor` which measures the height of waste inside the bin and a `wireless B` solution to exchange information. It is autonomous and works on a `battery`. There are as many such devices as bins in the recycling center.
 
-`board A` is unique per recycling center and has processing capabilities (maybe a Raspberry Pie or Beagle Bone Black). It demands/receive info from `board B`, processes them and send them by chunk to smart phones in the vicinity.
+`board A` is unique per recycling center and has processing capabilities (maybe a Raspberry Pie or Beagle Bone Black). It demands/receives info from `board B`, processes them and send them by chunk to smart phones in the vicinity.
 
-There are many possibilities for each component and the optimal solution is the result of a multidimenstional optimisation problem. For each component, we need to figure out:
+There are many possibilities for each component and the optimal solution is the result of a multidimensional optimisation problem. For each component, we need to figure out:
 
     - energy consumption
     - range
@@ -32,7 +32,7 @@ There are many possibilities for each component and the optimal solution is the 
     - size
     - ...
 
-and then write a programs that tests all different combinations.
+and then write a program that tests all different combinations.
 
 ## Links
 
@@ -69,3 +69,11 @@ Are there any law restrictions for using this [RF transmitter](http://ninjablock
 [Arduino low power and RF transmitter with code](https://github.com/petervojtek/diy/wiki/Arduino-with-Very-Low-Power-Consumption)
 
 [Solar module](http://www.voltaicsystems.com/solar-arduino-guide.shtml)
+
+### Interesting Single Board Computers
+
+The [Raspberry Pi Compute Model](http://www.raspberrypi.org/raspberry-pi-compute-module-new-product/) just contains the basic ingredients of the Raspberry Pi (the Broadcom CPU / GPU with 512MB of Ram) and 4GB of Flash Memory.
+
+The [Cubieboard](http://cubieboard.org/) seems to have several advantages compared to the Raspberry Pi, most importantly a separate SATA port for efficiently accessing a local hard drive.
+
+The [Parallella](http://www.parallella.org/) supercomputer claims to deliver 90GFlops of computing power, supposedly the most efficient supercomputer once it will be available for shipping again.

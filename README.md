@@ -72,7 +72,7 @@ Are there any law restrictions for using this [RF transmitter](http://ninjablock
 
 ### Interesting Single Board Computers
 
-The [Raspberry Pi Compute Model](http://www.raspberrypi.org/raspberry-pi-compute-module-new-product/) just contains the basic ingredients of the Raspberry Pi (the Broadcom CPU / GPU with 512MB of Ram) and 4GB of Flash Memory.
+The [Raspberry Pi Compute Module](http://www.raspberrypi.org/raspberry-pi-compute-module-new-product/) just contains the basic ingredients of the Raspberry Pi (the Broadcom CPU / GPU with 512MB of RAM) and 4GB of Flash Memory.
 
 The [Cubieboard](http://cubieboard.org/) seems to have several advantages compared to the Raspberry Pi, most importantly a separate SATA port for efficiently accessing a local hard drive.
 

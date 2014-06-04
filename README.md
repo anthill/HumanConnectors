@@ -36,11 +36,20 @@ and then write a program that tests all different combinations.
 
 ## Links
 
+### Possible sensors
+
+[Camera](http://www.arducam.com/arducam-bluetooth-module-wireless-image-system/)
+
+[Ultrasounds](http://www.adafruit.com/products/984)
+
+
 ### Wireless options
 
 In the following there is a loose list of links about wireless transmission methods (RF, IR, Bluetooth, Wifi, ...) to be examined more closely. Most of the devices seem to work well on Arduino, but what about Raspberry Pi? Some of the shields are to be connected to a full Arduino, some wireless adapters might just work with the core microcontroller.
 
-Are there any law restrictions for using this [RF transmitter](http://ninjablocks.com/blogs/how-to/7501042-adding-rf-433mhz-to-your-arduino) in europe?
+[RF transmitter](http://ninjablocks.com/blogs/how-to/7501042-adding-rf-433mhz-to-your-arduino) and [this](http://conoroneill.net/arduino-and-raspberry-pi-communicating-over-2-4ghz-with-cheap-nrf24l01-modules/)
+
+[Xbee](http://www.digi.com/fr/products/wireless/point-multipoint/xbee-series1-module) and [this](http://forum.arduino.cc/index.php?topic=59082.0;wap2)
 
 [IR LED](http://www.adafruit.com/products/387) + [IR Sensor](http://www.adafruit.com/products/157)
 

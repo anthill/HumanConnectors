@@ -42,10 +42,11 @@ and then write a program that tests all different combinations.
 
 [Ultrasounds](http://www.adafruit.com/products/984)
 
+A specific [implementation](http://www.instructables.com/id/Arduino-dual-ultrasonic-liquid-level-meter-with-in/) is using an ultrasonic sensor together with an arduino and Xbee in order to measure the liquid level in containers.
 
 ### Wireless options
 
-In the following there is a loose list of links about wireless transmission methods (RF, IR, Bluetooth, Wifi, ...) to be examined more closely. Most of the devices seem to work well on Arduino, but what about Raspberry Pi? Some of the shields are to be connected to a full Arduino, some wireless adapters might just work with the core microcontroller.
+In the following there is a loose list of links about wireless transmission methods (RF, IR, Bluetooth, Wifi, ...) to be examined more closely. Most of the devices seem to work well on Arduino, but what about Raspberry Pi? Some of the shields are to be connected to a full Arduino, some wireless adapters might just work with the core microcontroller. It should also be mentioned, that in the case of Bluetooth, the [Bluetooth Low Energy](http://en.wikipedia.org/wiki/Bluetooth_low_energy) standard is particulary interesting.
 
 [RF transmitter](http://ninjablocks.com/blogs/how-to/7501042-adding-rf-433mhz-to-your-arduino) and [this](http://conoroneill.net/arduino-and-raspberry-pi-communicating-over-2-4ghz-with-cheap-nrf24l01-modules/)
 

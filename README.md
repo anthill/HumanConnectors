@@ -49,6 +49,8 @@ In the following there is a loose list of links about wireless transmission meth
 
 [RF transmitter](http://ninjablocks.com/blogs/how-to/7501042-adding-rf-433mhz-to-your-arduino) and [this](http://conoroneill.net/arduino-and-raspberry-pi-communicating-over-2-4ghz-with-cheap-nrf24l01-modules/)
 
+The Zigbee protokoll seems to be very interesting, as, citing from the [wikipedia article](http://en.wikipedia.org/wiki/ZigBee), it is specifically designed to be much simpler and less expensive than for example Wifi and Bluetooth. It aims especially at scenarios where battery life time is an issue. Xbee Series 2 seems to implement the Zigbee standard, as [this article](http://tutorial.cytron.com.my/2011/03/06/is-xbee-zigbee/) explains.
+
 [Xbee](http://www.digi.com/fr/products/wireless/point-multipoint/xbee-series1-module) and [this](http://forum.arduino.cc/index.php?topic=59082.0;wap2)
 
 [IR LED](http://www.adafruit.com/products/387) + [IR Sensor](http://www.adafruit.com/products/157)
@@ -64,6 +66,12 @@ In the following there is a loose list of links about wireless transmission meth
 [Arduino Wifi Shield](http://arduino.cc/en/Main/ArduinoWiFiShield)
 
 [Arduino BT](http://arduino.cc/en/Main/ArduinoBoardBT?from=Main.ArduinoBoardBluetooth)
+
+Might [this article](http://plischka.at/Wi.232EUR-R.html) in german be of relevance? It seems to be used in model airplanes.
+
+[Here](http://www.handysektor.de/geraete-technik/funktechnik.html) is an interesting speed comparison between different wireless protocols, which is also in german. The graph should be self-explaining.
+
+[This wikipedia article](http://en.wikipedia.org/wiki/Short_Range_Devices) gives a nice overwiev over available frequency bands.
 
 ### Arduino power consumption links
 

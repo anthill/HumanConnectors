@@ -40,7 +40,7 @@ and then write a program that tests all different combinations.
 
 [Camera](http://www.arducam.com/arducam-bluetooth-module-wireless-image-system/)
 
-[Ultrasounds](http://www.adafruit.com/products/984)
+[Ultrasounds](http://www.adafruit.com/products/1137)
 
 A specific [implementation](http://www.instructables.com/id/Arduino-dual-ultrasonic-liquid-level-meter-with-in/) is using an ultrasonic sensor together with an arduino and Xbee in order to measure the liquid level in containers.
 
@@ -63,6 +63,8 @@ The Zigbee protokoll seems to be very interesting, as, citing from the [wikipedi
 [Seeed Bluetooth Shield](http://www.seeedstudio.com/depot/bluetooth-shield-p-866.html?cPath=132_134)
 
 [Self-made Bluetooth Low Energy Shield](http://www.mkroll.mobi/?page_id=386)
+
+[BLE](http://www.makershed.com/BLE_Mini_Bluetooth_4_0_Interface_p/mkrbl2.htm)
 
 [Arduino Wifi Shield](http://arduino.cc/en/Main/ArduinoWiFiShield)
 
@@ -87,6 +89,8 @@ Might [this article](http://plischka.at/Wi.232EUR-R.html) in german be of releva
 [Arduino low power and RF transmitter with code](https://github.com/petervojtek/diy/wiki/Arduino-with-Very-Low-Power-Consumption)
 
 [Solar module](http://www.voltaicsystems.com/solar-arduino-guide.shtml)
+
+[Battery](http://cybergibbons.com/uncategorized/arduino-misconceptions-6-a-9v-battery-is-a-good-power-source/)
 
 ### Interesting Single Board Computers
 

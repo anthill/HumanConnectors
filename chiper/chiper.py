@@ -95,3 +95,12 @@ b = nb_per_hour*Bluetooth_low_energy.getConso(cameraOV2640.size_output)
 print b
 
 print batteryAA.energy/(a+b)
+
+# how long can a battery hold a ultrasound sensor that takes a measurment each half-hour and trasmit it via BLE ?
+nb_per_hour = 2
+a = ultrasoundLVEZ0.getConsoHour(nb_per_hour)
+print a
+b = nb_per_hour*Bluetooth_low_energy.getConso(ultrasoundLVEZ0.size_output)
+print b
+
+print batteryAA.energy/(a+b)

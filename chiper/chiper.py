@@ -152,7 +152,8 @@ ultrasoundLVEZ0 = Sensor(Component(17, 0.5, 85*0.75, 7*5*4.5), 10, 7, 1e-6)
 
 # http://en.wikipedia.org/wiki/Bluetooth_low_energy
 # http://www.makershed.com/BLE_Mini_Bluetooth_4_0_Interface_p/mkrbl2.htm
-Bluetooth_low_energy = Communicator.fromComponent(Component(100,1e-3,70*0.75, 2*2*1), 1,1, 100)
+#Bluetooth_low_energy = Communicator.fromComponent(Component(100,1e-3,70*0.75, 2*2*1), 1,1, 100)
+Bluetooth_low_energy = Communicator.fromComponent(Component(100,0,70*0.75, 2*2*1), 1,1, 100)
 
 # battery AA (two of them)
 # http://en.wikipedia.org/wiki/AA_battery
@@ -168,7 +169,7 @@ solution = Solution(arduino_uno, cameraOV2640, Bluetooth_low_energy, PowerSupply
 nb_per_hour = 2
 a = cameraOV2640.getConsumptionPerHour(nb_per_hour, arduino_uno.power_active, arduino_uno.power_standby)
 print a
-b = nb_per_hour*Bluetooth_low_energy.getConsumptionPerHour(nb_per_hour, arduino_uno.power_active, arduino_uno.power_standby, cameraOV2640.size_output)
+b = Bluetooth_low_energy.getConsumptionPerHour(nb_per_hour, arduino_uno.power_active, arduino_uno.power_standby, cameraOV2640.size_output)
 print b
 
 print batteryAA.energy/(a+b)
@@ -177,7 +178,7 @@ print batteryAA.energy/(a+b)
 nb_per_hour = 2
 a = ultrasoundLVEZ0.getConsumptionPerHour(nb_per_hour, arduino_uno.power_active, arduino_uno.power_standby)
 print a
-b = nb_per_hour*Bluetooth_low_energy.getConsumptionPerHour(nb_per_hour, arduino_uno.power_active, arduino_uno.power_standby, ultrasoundLVEZ0.size_output)
+b = Bluetooth_low_energy.getConsumptionPerHour(nb_per_hour, arduino_uno.power_active, arduino_uno.power_standby, ultrasoundLVEZ0.size_output)
 print b
 
 print batteryAA.energy/(a+b)

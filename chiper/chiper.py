@@ -14,16 +14,13 @@ class Component(object):
 
 
 class Board(Component):
-    def __init__(self, power_active, power_standby, price, size, memory):
-        super(Board, self).__init__(power_active, power_standby, price, size)
+
+    def __init__(self, component, memory):
+        super(Board, self).__init__(component.power_active, component.power_standby, component.price, component.size)
         """
         A board is an object with basically some system memory for programm code and some data
         """
         self.memory = memory # system memory in MB
-
-    @classmethod
-    def fromComponent(cls, c, memory):
-        return cls(c.power_active, c.power_standby, c.price, c.size, memory)
 
 
 class Sensor(Component):
@@ -38,10 +35,6 @@ class Sensor(Component):
         self.max_range = max_range # max_range in m
         self.size_output = size_output # size in Mb of the output of one measurment
 
-    @classmethod
-    def fromComponent(cls, c, max_rate, max_range, size_output):
-        return cls(c.power_active, c.power_standby, c.price, c.size, max_rate, max_range, size_output)
-
     def getConsumptionPerHour(self, measuresPerHour, driver_power_active, driver_power_standby):
         """
         Given a measurement rate per hour, how much energy in mWs
@@ -55,18 +48,14 @@ class Sensor(Component):
 
 class Communicator(Component):
 
-    def __init__(self, power_active, power_standby, price, size, upload, download, max_range):
-        super(Communicator, self).__init__(power_active, power_standby, price, size)
+    def __init__(self, component, upload, download, max_range):
+        super(Communicator, self).__init__(component.power_active, component.power_standby, component.price, component.size)
         """
         A communication chip has :
         """
         self.upload = upload # upload in Mb/s
         self.download = download # upload in Mb/s
         self.max_range = max_range # max_range in m
-
-    @classmethod
-    def fromComponent(cls, c, upload, download, max_range):
-        return cls(c.power_active, c.power_standby, c.price, c.size, upload, download, max_range)
 
     def getConsumptionPerHour(self, measuresPerHour, driver_power_active, driver_power_standby, size_file):
         """
@@ -81,8 +70,8 @@ class Communicator(Component):
 
 class Battery(Component):
 
-    def __init__(self, power_active, power_standby, price, size, voltage, amperage, energy):
-        super(Battery, self).__init__(power_active, power_standby, price, size)
+    def __init__(self, component, voltage, amperage, energy):
+        super(Battery, self).__init__(component.power_active, component.power_standby, component.price, component.size)
         """
         A simple Battery
         """
@@ -90,22 +79,15 @@ class Battery(Component):
         self.amperage = amperage # amperage in mA
         self.energy = energy # energy in mWh
 
-    @classmethod
-    def fromComponent(cls, c, voltage, amperage, energy):
-        return cls(c.power_active, c.power_standby, c.price, c.size, voltage, amperage, energy)
 
 class PowerSupply(Battery):
 
     def __init__(self, battery, number):
-        super(PowerSupply, self).__init__(number * battery.power_active, number * battery.power_standby, number * battery.price,
-                                          number * battery.size, number * battery.voltage, battery.amperage, number * battery.energy)
+        super(PowerSupply, self).__init__(Component(number * battery.power_active, number * battery.power_standby, number * battery.price,
+                                                    number * battery.size), number * battery.voltage, battery.amperage, number * battery.energy)
         """
         A power supply consists of several batteries
         """
-
-    @classmethod
-    def fromComponent(cls, c, number):
-        return cls(c.power_active, c.power_standby, c.price, c.size, c.voltage, c.amperage, c.energy, number)
 
 
 class Solution(object):
@@ -119,7 +101,6 @@ class Solution(object):
         self.communicator = communicator
         self.powersupply = powersupply
 
-    @classmethod
     def getLifetime(self, measuresPerHour):
         """
         Get lifetime of complete solution in hours
@@ -152,33 +133,29 @@ ultrasoundLVEZ0 = Sensor(Component(17, 0.5, 85*0.75, 7*5*4.5), 10, 7, 1e-6)
 
 # http://en.wikipedia.org/wiki/Bluetooth_low_energy
 # http://www.makershed.com/BLE_Mini_Bluetooth_4_0_Interface_p/mkrbl2.htm
-#Bluetooth_low_energy = Communicator.fromComponent(Component(100,1e-3,70*0.75, 2*2*1), 1,1, 100)
-Bluetooth_low_energy = Communicator.fromComponent(Component(100,0,70*0.75, 2*2*1), 1,1, 100)
+#Bluetooth_low_energy = Communicator(Component(100,1e-3,70*0.75, 2*2*1), 1,1, 100)
+Bluetooth_low_energy = Communicator(Component(100,0,70*0.75, 2*2*1), 1,1, 100)
 
 # battery AA (two of them)
 # http://en.wikipedia.org/wiki/AA_battery
-batteryAA = Battery.fromComponent(Component(100,0,1, 5*2*1), 3, 50, 3.9e3)
-#batteryAA = Battery.fromComponent(Component(50,0,1, 5*1*1), 3, 50, 1.9e3)
+#batteryAA = Battery(Component(100,0,1, 5*2*1), 3, 50, 3.9e3)
+batteryAA = Battery(Component(50,0,1, 5*1*1), 3, 50, 1.9e3)
 
-arduino_uno = Board.fromComponent(Component(0,0,0,0),0)
 
-solution = Solution(arduino_uno, cameraOV2640, Bluetooth_low_energy, PowerSupply(batteryAA,2))
+arduino_uno = Board(Component(0,0,0,0),0)
 
+
+nb_per_hour = 2
 
 # how long can a battery hold a camera that takes a photo each half-hour and transmit it via BLE ?
-nb_per_hour = 2
-a = cameraOV2640.getConsumptionPerHour(nb_per_hour, arduino_uno.power_active, arduino_uno.power_standby)
-print a
-b = Bluetooth_low_energy.getConsumptionPerHour(nb_per_hour, arduino_uno.power_active, arduino_uno.power_standby, cameraOV2640.size_output)
-print b
-
-print batteryAA.energy/(a+b)
+cameraOV2640_BLE = Solution(arduino_uno, cameraOV2640, Bluetooth_low_energy, PowerSupply(batteryAA,2))
+print cameraOV2640_BLE.getLifetime(nb_per_hour)
+#a = cameraOV2640.getConsumptionPerHour(nb_per_hour, arduino_uno.power_active, arduino_uno.power_standby)
+#b = Bluetooth_low_energy.getConsumptionPerHour(nb_per_hour, arduino_uno.power_active, arduino_uno.power_standby, cameraOV2640.size_output)
+#print batteryAA.energy/(a+b)
 
 # how long can a battery hold a ultrasound sensor that takes a measurment each half-hour and transmit it via BLE ?
-nb_per_hour = 2
-a = ultrasoundLVEZ0.getConsumptionPerHour(nb_per_hour, arduino_uno.power_active, arduino_uno.power_standby)
-print a
-b = Bluetooth_low_energy.getConsumptionPerHour(nb_per_hour, arduino_uno.power_active, arduino_uno.power_standby, ultrasoundLVEZ0.size_output)
-print b
-
-print batteryAA.energy/(a+b)
+ultrasoundLVEZ0_BLE = Solution(arduino_uno, ultrasoundLVEZ0, Bluetooth_low_energy, PowerSupply(batteryAA,2))
+print ultrasoundLVEZ0_BLE.getLifetime(2)
+#a = ultrasoundLVEZ0.getConsumptionPerHour(nb_per_hour, arduino_uno.power_active, arduino_uno.power_standby)
+#b = Bluetooth_low_energy.getConsumptionPerHour(nb_per_hour, arduino_uno.power_active, arduino_uno.power_standby, ultrasoundLVEZ0.size_output)

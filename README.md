@@ -42,6 +42,8 @@ and then write a program that tests all different combinations.
 
 [Ultrasounds](http://www.adafruit.com/products/1137)
 
+This [ultrasound](http://www.fasttech.com/products/0/10000007/1012007-arduino-compatible-hc-sr04-ultrasonic-sonar) sensor is extremely cheap and works together with arduino.
+
 A specific [implementation](http://www.instructables.com/id/Arduino-dual-ultrasonic-liquid-level-meter-with-in/) is using an ultrasonic sensor together with an arduino and Xbee in order to measure the liquid level in containers.
 
 ### Wireless options
@@ -52,7 +54,7 @@ In the following there is a loose list of links about wireless transmission meth
 
 The Zigbee protokoll seems to be very interesting, as, citing from the [wikipedia article](http://en.wikipedia.org/wiki/ZigBee), it is specifically designed to be much simpler and less expensive than for example Wifi and Bluetooth. It aims especially at scenarios where battery life time is an issue. Xbee Series 2 seems to implement the Zigbee standard, as [this article](http://tutorial.cytron.com.my/2011/03/06/is-xbee-zigbee/) explains.
 
-[Xbee](http://www.digi.com/fr/products/wireless/point-multipoint/xbee-series1-module) and [this](http://forum.arduino.cc/index.php?topic=59082.0;wap2)
+[Xbee](http://www.digi.com/fr/products/wireless/point-multipoint/xbee-series1-module) and [this](http://forum.arduino.cc/index.php?topic=59082.0;wap2), an example of which can be found [here](http://jeromeabel.net/fr/ressources/xbee-arduino). This sensor fits perfectly on the arduino nano.
 
 [IR LED](http://www.adafruit.com/products/387) + [IR Sensor](http://www.adafruit.com/products/157)
 
@@ -75,6 +77,10 @@ Might [this article](http://plischka.at/Wi.232EUR-R.html) in german be of releva
 [Here](http://www.handysektor.de/geraete-technik/funktechnik.html) is an interesting speed comparison between different wireless protocols, which is also in german. The graph should be self-explaining.
 
 [This wikipedia article](http://en.wikipedia.org/wiki/Short_Range_Devices) gives a nice overwiev over available frequency bands.
+
+### Wired options
+
+Instead of communicating with a wireless scheme, one could in principle also connect a sensor directly with a [single long wire](http://playground.arduino.cc/Learning/OneWire). This technolgy allows to connect up to 65536 sensors over a single usb dongle. The sensors are wired on a single line, the ground not being connected directly over the wire.
 
 ### Arduino power consumption links
 

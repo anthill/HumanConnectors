@@ -96,7 +96,11 @@ Instead of communicating with a wireless scheme, one could in principle also con
 
 [Solar module](http://www.voltaicsystems.com/solar-arduino-guide.shtml)
 
+The following [solar module](http://www.amazon.fr/Chargeur-Portable-téléphone-appareil-numérique/dp/B00378SRDY/ref=sr_1_19?ie=UTF8&qid=1403195735&sr=8-19&keywords=chargeur+solaire) also contains a battery which delivers 5.5V and contains 1350mAh. This should be enough to power an arduino with some sensors and communication dongles.
+
 [Battery](http://cybergibbons.com/uncategorized/arduino-misconceptions-6-a-9v-battery-is-a-good-power-source/)
+
+In order to render the whole waterproof, some specific [power gel](http://electricalproducts.cellpack.com/fileadmin/user_upload/bbcgroup.biz/news/eproducts/Drucksachen/Drucksachen_en/powergel_flyer_uk.pdf) may be of use. This gel does not conduct electricity, but seems to conduct heat.
 
 ### Interesting Single Board Computers
 

@@ -102,6 +102,18 @@ The following [solar module](http://www.amazon.fr/Chargeur-Portable-téléphone-
 
 In order to render the whole waterproof, some specific [power gel](http://electricalproducts.cellpack.com/fileadmin/user_upload/bbcgroup.biz/news/eproducts/Drucksachen/Drucksachen_en/powergel_flyer_uk.pdf) may be of use. This gel does not conduct electricity, but seems to conduct heat.
 
+### Different Arduino models
+
+The [Arduino Uno](http://arduino.cc/en/Main/arduinoBoardUno) is certainly one of the most accessable models for beginners. This board provides 14 digital pins that operate at 5V each. It also provides a 3V3 power supply for connectors such as xbee and other add-on boards that operate at lower voltages. On the other side, the onboard voltage regulators draw [10mA of quiescent current](http://playground.arduino.cc/Learning/ArduinoSleepCode) even while in sleeping mode. This will dry a usual battery in 1-2 weeks, just for feeding the voltage regulator, requiring the use of solar panels.
+
+The [Arduino Nano](http://arduino.cc/en/Main/arduinoBoardNano) uses the same microcontroller as the Arduino Uno, and therefore has in principle the same functionalities. The main difference is the much smaller size and the lacking DC power jack. The onboard voltage regulator seems the draw slightly less current.
+
+The [Arduino Fio](http://arduino.cc/en/Main/ArduinoBoardFio) contains a socket for directly connecting an xbee series 1 module, for communication and even for programming the Arduino wirelessly. It also contains a charging circuit for Lithuim Polymer batteries and a corresponding connector. However, this board operates at 3V3, requiring additional elements in order to connect 5V sensors. This board is produced and distributed by [sparkfun](https://www.sparkfun.com/).
+
+Sparkfun also produces the [Arduino Pro Mini](http://arduino.cc/en/Main/ArduinoBoardProMini) in two different versions, one at 3V3, the other at 5V. Both boards are particularly small and seem to use a more efficient voltage regulator. Notice, that these boards are reduced to the strict minimum and lack a USB connection, which is particularly interesting for energy efficiency in the production period. However, for programming the Arduino Pro Mini a suitable [breakout board](https://www.sparkfun.com/products/9716) is required, depending on the underlying voltage. Also notice, that the microcontroller of the Arduino Pro Mini is the ATMega168. There is also the [Arduino Pro Mini 328](https://www.sparkfun.com/products/11113), which exists in a 3V3 and a 5V variant and which uses the ATMega368, the same microcontroller as the Arduino Uno.
+
+
+
 ### Interesting Single Board Computers
 
 The [Raspberry Pi Compute Module](http://www.raspberrypi.org/raspberry-pi-compute-module-new-product/) just contains the basic ingredients of the Raspberry Pi (the Broadcom CPU / GPU with 512MB of RAM) and 4GB of Flash Memory.

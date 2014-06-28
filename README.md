@@ -46,6 +46,18 @@ This [ultrasound](http://www.fasttech.com/products/0/10000007/1012007-arduino-co
 
 A specific [implementation](http://www.instructables.com/id/Arduino-dual-ultrasonic-liquid-level-meter-with-in/) is using an ultrasonic sensor together with an arduino and Xbee in order to measure the liquid level in containers.
 
+### Measuring with ultrasonic sensors
+
+Here is a list of links where people have realized a system to measure the water level in bins.
+
+[Arduino Uno + URM37 + Xbee](http://www.instructables.com/id/Arduino-dual-ultrasonic-liquid-level-meter-with-in/)
+
+[Arduino + SRF05](http://www.makechronicles.com/2012/03/13/arduino-project-6-measuring-a-water-tank-level-srf05-ultrasonic-rangefinderarduino-mega-2560arduino-uno1-0/)
+
+[Arduino Uno + Ethernet + URM37](http://www.jo3ri.be/arduino/projects/tank-level-measuring-basic)
+
+[This example uses a display and also contains some code](http://www.open-electronics.org/water-tank-level-display-with-arduino/)
+
 ### Wireless options
 
 In the following there is a loose list of links about wireless transmission methods (RF, IR, Bluetooth, Wifi, ...) to be examined more closely. Most of the devices seem to work well on Arduino, but what about Raspberry Pi? Some of the shields are to be connected to a full Arduino, some wireless adapters might just work with the core microcontroller. It should also be mentioned, that in the case of Bluetooth, the [Bluetooth Low Energy](http://en.wikipedia.org/wiki/Bluetooth_low_energy) standard is particulary interesting.
@@ -104,13 +116,13 @@ In order to render the whole waterproof, some specific [power gel](http://electr
 
 ### Different Arduino models
 
-The [Arduino Uno](http://arduino.cc/en/Main/arduinoBoardUno) is certainly one of the most accessable models for beginners. This board provides 14 digital pins that operate at 5V each. It also provides a 3V3 power supply for connectors such as xbee and other add-on boards that operate at lower voltages. On the other side, the onboard voltage regulators draw [10mA of quiescent current](http://playground.arduino.cc/Learning/ArduinoSleepCode) even while in sleeping mode. This will dry a usual battery in 1-2 weeks, just for feeding the voltage regulator, requiring the use of solar panels.
+The [Arduino Uno](http://arduino.cc/en/Main/arduinoBoardUno) is certainly one of the most accessable models for beginners. This board provides 14 digital pins that operate at 5V each. It also provides a 3V3 power supply for connectors such as xbee and other add-on boards that operate at lower voltages. On the other side, the onboard voltage regulators draw [10mA of quiescent current](http://playground.arduino.cc/Learning/ArduinoSleepCode) even while in sleeping mode. This will dry a usual battery in 1-2 weeks, just for feeding the voltage regulator. This will only make sense if we use solar panels to recharge the batteries.
 
-The [Arduino Nano](http://arduino.cc/en/Main/arduinoBoardNano) uses the same microcontroller as the Arduino Uno, and therefore has in principle the same functionalities. The main difference is the much smaller size and the lacking DC power jack. The onboard voltage regulator seems the draw slightly less current.
+The [Arduino Nano](http://arduino.cc/en/Main/arduinoBoardNano) uses the same microcontroller as the Arduino Uno, and therefore has in principle the same functionalities. The main difference is the much smaller size and the lacking DC power jack. The onboard voltage regulator seems to draw slightly less current.
 
 The [Arduino Fio](http://arduino.cc/en/Main/ArduinoBoardFio) contains a socket for directly connecting an xbee series 1 module, for communication and even for programming the Arduino wirelessly. It also contains a charging circuit for Lithuim Polymer batteries and a corresponding connector. However, this board operates at 3V3, requiring additional elements in order to connect 5V sensors. This board is produced and distributed by [sparkfun](https://www.sparkfun.com/).
 
-Sparkfun also produces the [Arduino Pro Mini](http://arduino.cc/en/Main/ArduinoBoardProMini) in two different versions, one at 3V3, the other at 5V. Both boards are particularly small and seem to use a more efficient voltage regulator. Notice, that these boards are reduced to the strict minimum and lack a USB connection, which is particularly interesting for energy efficiency in the production period. However, for programming the Arduino Pro Mini a suitable [breakout board](https://www.sparkfun.com/products/9716) is required, depending on the underlying voltage. Also notice, that the microcontroller of the Arduino Pro Mini is the ATMega168. There is also the [Arduino Pro Mini 328](https://www.sparkfun.com/products/11113), which exists in a 3V3 and a 5V variant and which uses the ATMega368, the same microcontroller as the Arduino Uno.
+Sparkfun also produces the [Arduino Pro Mini](http://arduino.cc/en/Main/ArduinoBoardProMini) in two different versions, one at 3V3, the other at 5V. Both boards are particularly small and seem to use a more efficient voltage regulator. Notice, that these boards are reduced to the strict minimum and lack a USB connection, which is particularly interesting for energy efficiency in the production period. However, for programming the Arduino Pro Mini a suitable [breakout board](https://www.sparkfun.com/products/9716) is required, depending on the underlying voltage. Also notice, that the microcontroller of the Arduino Pro Mini is the ATMega168. There is also the [Arduino Pro Mini 328](https://www.sparkfun.com/products/11113), which exists in a 3V3 and a 5V variant and which uses the ATMega328, the same microcontroller as the Arduino Uno.
 
 
 

@@ -3,12 +3,13 @@
 
 class Component(object):
 
-    def __init__(self, power_active, power_standby, price, size):
+    def __init__(self, name, current_active, current_standby, price, size):
         """
         The basic class that all other components should extend
         """
-        self.power_active = power_active # the power_active consumption in mW
-        self.power_standby = power_standby # the power_standby consumption in mW 
+        self.name = name # give a literal name
+        self.current_active = current_active # the current in mA drawn in active mode
+        self.current_standby = current_standby # the current in mA drawn in standby or power down mode 
         self.price = price # price in euros
         self.size = size # size in volume cm3
 
@@ -16,7 +17,7 @@ class Component(object):
 class Board(Component):
 
     def __init__(self, component, memory):
-        super(Board, self).__init__(component.power_active, component.power_standby, component.price, component.size)
+        super(Board, self).__init__(component.name, component.current_active, component.current_standby, component.price, component.size)
         """
         A board is an object with basically some system memory for programm code and some data
         """
@@ -26,67 +27,67 @@ class Board(Component):
 class Sensor(Component):
 
     def __init__(self, component, max_rate, max_range, size_output):
-        super(Sensor, self).__init__(component.power_active, component.power_standby, component.price, component.size)
+        super(Sensor, self).__init__(component.name + ' (' + str(max_range) + 'm)', component.current_active, component.current_standby, component.price, component.size)
         """
         A sensor has :
         """
         self.max_rate = max_rate # measurement max_rate per second
         self.measurement_time = 1/max_rate
         self.max_range = max_range # max_range in m
-        self.size_output = size_output # size in Mb of the output of one measurment
+        self.size_output = size_output # size in MB of the output of one measurment
 
-    def getConsumptionPerHour(self, measuresPerHour, driver_power_active, driver_power_standby):
+    def getConsumptionPerHour(self, measuresPerHour, driver_current_active, driver_current_standby):
         """
-        Given a measurement rate per hour, how much energy in mWs
+        Given a measurement rate per hour, how much charge in mAs is consumed in one hour
         """
         measure_time = measuresPerHour * self.measurement_time
         idle_time = 3600 - measure_time
-        power_active = self.power_active + driver_power_active
-        power_standby = self.power_standby + driver_power_standby
-        return measure_time * power_active + idle_time * power_standby
+        current_active = self.current_active + driver_current_active - driver_current_standby
+        current_standby = self.current_standby 
+        return measure_time * current_active + idle_time * current_standby
 
 
 class Communicator(Component):
 
     def __init__(self, component, upload, download, max_range):
-        super(Communicator, self).__init__(component.power_active, component.power_standby, component.price, component.size)
+        super(Communicator, self).__init__(component.name + ' (' + str(max_range) + 'm)', component.current_active, component.current_standby, component.price, component.size)
         """
         A communication chip has :
         """
-        self.upload = upload # upload in Mb/s
-        self.download = download # upload in Mb/s
+        self.upload = upload # upload in MB/s
+        self.download = download # upload in MB/s
         self.max_range = max_range # max_range in m
 
-    def getConsumptionPerHour(self, measuresPerHour, driver_power_active, driver_power_standby, size_file):
+    def getConsumptionPerHour(self, measuresPerHour, driver_current_active, driver_current_standby, size_file):
         """
-        get the energy needed to transfer a file of size_file
+        Given a measurement rate per hour and a transfer file size, how much charge in mAs is consumed in one hour
         """
         transfer_time = measuresPerHour * size_file / self.upload
         idle_time = 3600 - transfer_time
-        power_active = self.power_active + driver_power_active
-        power_standby = self.power_standby + driver_power_standby
-        return transfer_time * power_active + idle_time * power_standby
+        current_active = self.current_active + driver_current_active - driver_current_standby
+        current_standby = self.current_standby
+        return transfer_time * current_active + idle_time * current_standby
 
 
 class Battery(Component):
 
-    def __init__(self, component, voltage, amperage, energy):
-        super(Battery, self).__init__(component.power_active, component.power_standby, component.price, component.size)
+    def __init__(self, component, voltage, amperage, charge):
+        super(Battery, self).__init__(component.name + ' (' + str(voltage) + 'V, ' + str(charge) + 'mAh)', 0, 0, component.price, component.size)
         """
         A simple Battery
         """
         self.voltage = voltage # voltage in volts
         self.amperage = amperage # amperage in mA
-        self.energy = energy # energy in mWh
+        self.charge = charge # charge in mAh
 
 
 class PowerSupply(Battery):
 
     def __init__(self, battery, number):
-        super(PowerSupply, self).__init__(Component(number * battery.power_active, number * battery.power_standby, number * battery.price,
-                                                    number * battery.size), number * battery.voltage, battery.amperage, number * battery.energy)
+        super(PowerSupply, self).__init__(Component(str(number) + 'x [ ' + battery.name + ' ]', 0, 0, number * battery.price, number * battery.size),
+                                          number * battery.voltage, battery.amperage, number * battery.charge)
         """
-        A power supply consists of several batteries
+        A power supply consists of several batteries in series, all quantities are extensive, except the current
         """
 
 
@@ -106,11 +107,11 @@ class Solution(object):
         Get lifetime of complete solution in hours
         The driving board will be active while mesuring and transfering the data, but in standby when neither of those actions is done
         """
-        sensor_consumption = self.sensor.getConsumptionPerHour(measuresPerHour, self.board.power_active, self.board.power_standby)
-        communicator_consumption = self.communicator.getConsumptionPerHour(measuresPerHour, self.board.power_active, self.board.power_standby, self.sensor.size_output)
-        return 3600 * self.powersupply.energy / (sensor_consumption + communicator_consumption)
+        sensor_consumption = self.sensor.getConsumptionPerHour(measuresPerHour, self.board.current_active, self.board.current_standby)
+        communicator_consumption = self.communicator.getConsumptionPerHour(measuresPerHour, self.board.current_active, self.board.current_standby, self.sensor.size_output)
+        return 3600 * self.powersupply.charge / (sensor_consumption + communicator_consumption + 3600*self.board.current_standby)
 
-    def getPrize(self):
+    def getPrice(self):
         return self.board.price + self.sensor.price + self.communicator.price + self.powersupply.price
 
     def getSize(self):
@@ -122,40 +123,125 @@ class Solution(object):
         => this is the latest possible moment of a data transfer before no space in memory is left anymore
         """
         return self.board.memory / (measuresPerHour * self.sensor.size_output)
+
+    def print_summary(self, measuresPerHour):
+        """
+        This functions prints all above information 
+        """
+        print self.board.name + ', ' + self.sensor.name + ', ' + self.communicator.name + ', ' + self.powersupply.name
+        print 'Life time in hours        : ' + str(int(round(self.getLifetime(measuresPerHour),0))) + '  [ ' + str(round(self.getLifetime(measuresPerHour)/24,1)) + ' days ]'
+        print 'Price in euros            : ' + str(round(self.getPrice(),2))
+        print 'Volume in ccm             : ' + str(int(round(self.getSize(),0)))
+        #print 'Memory fill time in hours : ' + str(int(round(self.getMemoryFilltime(measuresPerHour),0)))
+        print ''
+        print ''
   
 
+### Sensors
 
 # http://www.arducam.com/camera-modules/2mp-ov2640/
-cameraOV2640 = Sensor(Component(125, 0.6, 7*0.75, 2*2*1), 15, 10, 0.13)
+cameraOV2640 = Sensor(Component('Camera OV2640', 125, 0.6, 7*0.75, 2*2*1), 15, 10, 0.13)
 
 # http://www.adafruit.com/products/1137
-ultrasoundLVEZ0 = Sensor(Component(17, 0.5, 85*0.75, 7*5*4.5), 10, 7, 1e-6)
+ultrasoundLVEZ0 = Sensor(Component('Ultrasound LVEZ0', 17, 0.5, 85*0.75, 7*5*4.5), 10, 7, 1e-6)
+
+# found on www.fasttech.com
+ultrasonic_HC_SR04 = Sensor(Component('Ultrasonic HC SR04', 15, 2, 1.96 * 0.75, 1.6*5*1.4), (60e-3)**(-1), 4.5, 1e-5)
+ultrasonic_HY_SRF05 = Sensor(Component('Ultrasonic HY SRF05', 15, 2, 2.28 * 0.75, 1.9*4.5*2.1), (60e-3)**(-1), 4.5, 1e-5)
+
+
+
+### Communicators
 
 # http://en.wikipedia.org/wiki/Bluetooth_low_energy
 # http://www.makershed.com/BLE_Mini_Bluetooth_4_0_Interface_p/mkrbl2.htm
 #Bluetooth_low_energy = Communicator(Component(100,1e-3,70*0.75, 2*2*1), 1,1, 100)
-Bluetooth_low_energy = Communicator(Component(100,0,70*0.75, 2*2*1), 1,1, 100)
+#Bluetooth_low_energy = Communicator(Component(100,0,70*0.75, 2*2*1), 1,1, 100)
+# http://www.adafruit.com/products/1697
+# the consumption data is not quite clear yet, let's assume the following values
+Bluefruit_LE = Communicator(Component('Bluefruit Low Energy', 100, 0, 19.95 * 0.75, 2.9*2.8*0.1), 1, 1, 100)
+
+
+# http://jeromeabel.net/files/ressources/xbee-arduino/xbee-arduino.pdf
+xBee_series2 = Communicator(Component('xBee series 2', 40, 0.01, 23 * 0.75, 2.5*2.8*0.3), 0.25, 0.25, 100)
+
+
+# https://www.sparkfun.com/products/10534
+# http://www.robotshop.com/en/seeedstudio-433mhz-low-cost-transmitter-receiver-pair.html
+# RF 433MHz Transmitter
+# the comsumption in idle mode is speculation
+RF433 = Communicator(Component('RF 433 transmitter', 8, 8, 3.95 * 0.75, 1*2.5*0.2), 8e-3, 0, 150)
+
+
+
+### Arduinos
+
+# found on www.fasttech.com
+arduino_uno_rev3 = Board(Component('Arduino Uno', 50, 35, 11.62 * 0.75, 7.5*5.3*1.5), 0.032)
+
+arduino_nano_V3_0 = Board(Component('Arduino Nano', 25 , 19, 8.07 * 0.75, 4.4*1.9*2), 0.032)
+
+# https://www.sparkfun.com/products/11113
+# two models are available, one with 3.3V and one with 5V voltage regulator, both powered by Atmega328 microprocessor
+# http://s6z.de/cms/index.php/arduino/nuetzliches/9-winterschlaf-fuer-arduino
+arduino_pro_mini_328 = Board(Component('Arduino Pro Mini 328', 19, 3.3, 9.95 * 0.75, 1.8*3.3*0.5), 0.032)
+
+
+# Bare ATmega328, the price will not be correct, as we will need several extra equipment
+bare_328 = Board(Component(' Bare ATmega328 (additional components needed)', 15.15, 0.36, 10, 3*1*1), 0.032)
+
+
+
+### Batteries
+
+# solar panel
+solar_panel_battery = PowerSupply(Battery(Component('Solar panel with battery', 0, 0, 9.38, 4*10*1), 5.5, 1000, 1350),1)
+
 
 # battery AA (two of them)
 # http://en.wikipedia.org/wiki/AA_battery
 #batteryAA = Battery(Component(100,0,1, 5*2*1), 3, 50, 3.9e3)
-batteryAA = Battery(Component(50,0,1, 5*1*1), 3, 50, 1.9e3)
+# http://www.amazon.fr/Duracell-Pile-Rechargeable-Duralock-Charged/dp/B00E5YSXPQ/ref=pd_rhf_dp_p_img_7
+batteryAA = Battery(Component('Rechargeable AA battery', 0, 0, 8.69/4, 5*1*1), 1.2, 0, 2400)
 
 
-arduino_uno = Board(Component(0,0,0,0),0)
 
 
-nb_per_hour = 2
 
-# how long can a battery hold a camera that takes a photo each half-hour and transmit it via BLE ?
-cameraOV2640_BLE = Solution(arduino_uno, cameraOV2640, Bluetooth_low_energy, PowerSupply(batteryAA,2))
-print cameraOV2640_BLE.getLifetime(nb_per_hour)
-#a = cameraOV2640.getConsumptionPerHour(nb_per_hour, arduino_uno.power_active, arduino_uno.power_standby)
-#b = Bluetooth_low_energy.getConsumptionPerHour(nb_per_hour, arduino_uno.power_active, arduino_uno.power_standby, cameraOV2640.size_output)
-#print batteryAA.energy/(a+b)
 
-# how long can a battery hold a ultrasound sensor that takes a measurment each half-hour and transmit it via BLE ?
-ultrasoundLVEZ0_BLE = Solution(arduino_uno, ultrasoundLVEZ0, Bluetooth_low_energy, PowerSupply(batteryAA,2))
-print ultrasoundLVEZ0_BLE.getLifetime(2)
-#a = ultrasoundLVEZ0.getConsumptionPerHour(nb_per_hour, arduino_uno.power_active, arduino_uno.power_standby)
-#b = Bluetooth_low_energy.getConsumptionPerHour(nb_per_hour, arduino_uno.power_active, arduino_uno.power_standby, ultrasoundLVEZ0.size_output)
+
+### assemble different solutions
+
+cameraOV2640_BLE = Solution(arduino_uno_rev3, cameraOV2640, Bluefruit_LE, PowerSupply(batteryAA,4))
+
+ultrasoundLVEZ0_BLE = Solution(arduino_uno_rev3, ultrasoundLVEZ0, Bluefruit_LE, PowerSupply(batteryAA,4))
+
+pro328_srf05_RF433 = Solution(arduino_pro_mini_328, ultrasonic_HY_SRF05, RF433, PowerSupply(batteryAA,4))
+
+pro328_srf05_RF433_solar = Solution(arduino_pro_mini_328, ultrasonic_HY_SRF05, RF433, solar_panel_battery)
+
+pro328_srf05_xbee_solar = Solution(arduino_pro_mini_328, ultrasonic_HY_SRF05, xBee_series2, solar_panel_battery)
+
+bare_srf05_xbee_battery = Solution(bare_328, ultrasonic_HY_SRF05, xBee_series2, PowerSupply(batteryAA,4))
+
+
+
+
+
+
+### output lifetimes and prices
+# notice, that the energy consumption is in principle dictated by the idle period, as the arduinos essentially have nothing to do
+
+
+
+print '  measure every 30 minutes '
+print '============================'
+print ''
+measurements_per_hour = 2
+
+cameraOV2640_BLE.print_summary(measurements_per_hour)
+ultrasoundLVEZ0_BLE.print_summary(measurements_per_hour)
+pro328_srf05_RF433.print_summary(measurements_per_hour)
+pro328_srf05_RF433_solar.print_summary(measurements_per_hour)
+pro328_srf05_xbee_solar.print_summary(measurements_per_hour)
+bare_srf05_xbee_battery.print_summary(measurements_per_hour)

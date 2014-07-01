@@ -81,26 +81,36 @@ class Battery(Component):
         self.charge = charge # charge in mAh
 
 
-class PowerSupply(Battery):
+class SeriesBatteries(Battery):
 
     def __init__(self, battery, number):
-        super(PowerSupply, self).__init__(Component(str(number) + 'x [ ' + battery.name + ' ]', 0, 0, number * battery.price, number * battery.size),
-                                          number * battery.voltage, battery.amperage, number * battery.charge)
+        super(SeriesBatteries, self).__init__(Component(str(number) + 'x [ ' + battery.name + ' ]', 0, 0, number * battery.price, number * battery.size),
+                                              number * battery.voltage, battery.amperage, battery.charge)
         """
-        A power supply consists of several batteries in series, all quantities are extensive, except the current
+        Put several batteries in series, all quantities are extensive, except the current and the charge
+        """
+
+
+class ParallelBatteries(Battery):
+
+    def __init__(self, battery, number):
+        super(ParallelBatteries, self).__init__(Component(str(number) + 'x [ ' + battery.name + ' ]', 0, 0, number * battery.price, number * battery.size),
+                                                battery.voltage, number * battery.amperage, number * battery.charge)
+        """
+        Put several batteries in parallel, all quantities are extensive, except the voltage
         """
 
 
 class Solution(object):
 
-    def __init__(self, board, sensor, communicator, powersupply):
+    def __init__(self, board, sensor, communicator, battery):
         """
         A complete solution consists of a baord, driving the sensor and the communicator and being powered by a set of batteries
         """
         self.board = board
         self.sensor = sensor
         self.communicator = communicator
-        self.powersupply = powersupply
+        self.powersupply = battery
 
     def getLifetime(self, measuresPerHour):
         """
@@ -195,7 +205,7 @@ bare_328 = Board(Component(' Bare ATmega328 (additional components needed)', 15.
 ### Batteries
 
 # solar panel
-solar_panel_battery = PowerSupply(Battery(Component('Solar panel with battery', 0, 0, 9.38, 4*10*1), 5.5, 1000, 1350),1)
+solar_panel_battery = Battery(Component('Solar panel with battery', 0, 0, 9.38, 4*10*1), 5.5, 1000, 1350)
 
 
 # battery AA (two of them)
@@ -212,17 +222,17 @@ batteryAA = Battery(Component('Rechargeable AA battery', 0, 0, 8.69/4, 5*1*1), 1
 
 ### assemble different solutions
 
-cameraOV2640_BLE = Solution(arduino_uno_rev3, cameraOV2640, Bluefruit_LE, PowerSupply(batteryAA,4))
+cameraOV2640_BLE = Solution(arduino_uno_rev3, cameraOV2640, Bluefruit_LE, SeriesBatteries(batteryAA,4))
 
-ultrasoundLVEZ0_BLE = Solution(arduino_uno_rev3, ultrasoundLVEZ0, Bluefruit_LE, PowerSupply(batteryAA,4))
+ultrasoundLVEZ0_BLE = Solution(arduino_uno_rev3, ultrasoundLVEZ0, Bluefruit_LE, SeriesBatteries(batteryAA,4))
 
-pro328_srf05_RF433 = Solution(arduino_pro_mini_328, ultrasonic_HY_SRF05, RF433, PowerSupply(batteryAA,4))
+pro328_srf05_RF433 = Solution(arduino_pro_mini_328, ultrasonic_HY_SRF05, RF433, SeriesBatteries(batteryAA,4))
 
 pro328_srf05_RF433_solar = Solution(arduino_pro_mini_328, ultrasonic_HY_SRF05, RF433, solar_panel_battery)
 
 pro328_srf05_xbee_solar = Solution(arduino_pro_mini_328, ultrasonic_HY_SRF05, xBee_series2, solar_panel_battery)
 
-bare_srf05_xbee_battery = Solution(bare_328, ultrasonic_HY_SRF05, xBee_series2, PowerSupply(batteryAA,4))
+bare_srf05_xbee_battery = Solution(bare_328, ultrasonic_HY_SRF05, xBee_series2, SeriesBatteries(batteryAA,4))
 
 
 

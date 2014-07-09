@@ -38,6 +38,15 @@ and then write a program that tests all different combinations.
 
 ### Possible sensors
 
+#### Cameras
+
+- [Pi camera](http://www.adafruit.com/products/1367)
+- [Press and shoot](https://learn.adafruit.com/diy-wifi-raspberry-pi-touch-cam)
+- [Jpeg for adafruit](https://www.adafruit.com/products/1386)
+- [Iot Cam](http://www.ladyada.net/make/IoTcamera/)
+
+- [ov7670](http://www.arducam.com/camera-modules/0-3mp-ov7670/), [more](https://github.com/ComputerNerd/arduino-camera-tft)
+
 [Camera](http://www.arducam.com/arducam-bluetooth-module-wireless-image-system/)
 
 [Ultrasounds](http://www.adafruit.com/products/1137)
@@ -56,9 +65,13 @@ The Zigbee protokoll seems to be very interesting, as, citing from the [wikipedi
 
 [Xbee](http://www.digi.com/fr/products/wireless/point-multipoint/xbee-series1-module) and [this](http://forum.arduino.cc/index.php?topic=59082.0;wap2), an example of which can be found [here](http://jeromeabel.net/fr/ressources/xbee-arduino). This sensor fits perfectly on the arduino nano.
 
+[Xbee tutorial](http://www.cooking-hacks.com/documentation/tutorials/raspberry-pi-xbee)
+
 [IR LED](http://www.adafruit.com/products/387) + [IR Sensor](http://www.adafruit.com/products/157)
 
 [Bluetooth transceiver](http://www.instructables.com/id/Cheap-2-Way-Bluetooth-Connection-Between-Arduino-a/step3/Wiring-the-Arduino-Bluetooth-transceiver/)
+
+[Bluetooth turorial](http://www.cooking-hacks.com/documentation/tutorials/raspberry-pi-bluetooth)
 
 [Bluefruit Bluetooth adapter](http://www.adafruit.com/product/1697)
 

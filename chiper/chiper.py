@@ -147,15 +147,11 @@ arduino_uno = Board(Component(0,0,0,0),0)
 
 nb_per_hour = 2
 
-# how long can a battery hold a camera that takes a photo each half-hour and transmit it via BLE ?
+print "how long can a battery hold a camera that takes a photo each half-hour and transmit it via BLE ?"
 cameraOV2640_BLE = Solution(arduino_uno, cameraOV2640, Bluetooth_low_energy, PowerSupply(batteryAA,2))
-print cameraOV2640_BLE.getLifetime(nb_per_hour)
-#a = cameraOV2640.getConsumptionPerHour(nb_per_hour, arduino_uno.power_active, arduino_uno.power_standby)
-#b = Bluetooth_low_energy.getConsumptionPerHour(nb_per_hour, arduino_uno.power_active, arduino_uno.power_standby, cameraOV2640.size_output)
-#print batteryAA.energy/(a+b)
+print "%s hours" % cameraOV2640_BLE.getLifetime(nb_per_hour)
 
-# how long can a battery hold a ultrasound sensor that takes a measurment each half-hour and transmit it via BLE ?
+
+print "how long can a battery hold a ultrasound sensor that takes a measurment each half-hour and transmit it via BLE ?"
 ultrasoundLVEZ0_BLE = Solution(arduino_uno, ultrasoundLVEZ0, Bluetooth_low_energy, PowerSupply(batteryAA,2))
-print ultrasoundLVEZ0_BLE.getLifetime(2)
-#a = ultrasoundLVEZ0.getConsumptionPerHour(nb_per_hour, arduino_uno.power_active, arduino_uno.power_standby)
-#b = Bluetooth_low_energy.getConsumptionPerHour(nb_per_hour, arduino_uno.power_active, arduino_uno.power_standby, ultrasoundLVEZ0.size_output)
+print "%s hours" %  ultrasoundLVEZ0_BLE.getLifetime(nb_per_hour)
